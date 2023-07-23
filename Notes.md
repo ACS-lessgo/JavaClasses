@@ -310,7 +310,7 @@ Java packages are used to organize classes into different namespaces to avoid na
 
 ```java
 
-`// Define a package
+// Define a package
 package com.example.mypackage;
 
 // Import classes from another package
@@ -339,7 +339,7 @@ In Java, classes from the same package are accessible without importing, but cla
 
 ```java
 
-`package com.example.myapp;
+package com.example.myapp;
 
 import com.example.util.MyUtilityClass;
 
