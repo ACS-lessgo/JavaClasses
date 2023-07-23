@@ -522,7 +522,7 @@ Thread synchronization is used to prevent multiple threads from accessing shared
 
 ```java
 
-`class Counter {
+class Counter {
     private int count;
 
     // Synchronized method
