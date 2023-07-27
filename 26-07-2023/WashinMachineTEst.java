@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class WashingMachineTEst {
 	public static void main(String[] args) {
@@ -51,17 +52,11 @@ public class WashingMachineTEst {
         washingMachine1.start();
         washingMachine2.start();
         washingMachine3.start();
-        
-
-        Laundry laundryResult1 = null;
-        Laundry laundryResult2 = null;
-        Laundry laundryResult3 = null;
 
 		try 
-		{
-			laundryResult1 = washingMachine1.wash(washPowder, water, electricity, clothes);
-			laundryResult2 = washingMachine2.wash(washPowder2, water2, electricity2, clothes2);
-			laundryResult3= washingMachine3.wash(washPowder3, water3, electricity3, clothes3);
+		{			
+			System.out.println("<-------------Machine I------------------->");
+			washingMachine1.wash(washPowder, water, electricity, clothes);
 		} catch (LowWaterLevelException e) 
 		{
 			e.printStackTrace();
@@ -74,45 +69,31 @@ public class WashingMachineTEst {
 		} catch (MotorFailureException e) 
 		{
 			e.printStackTrace();
+		} 
+		try {			
+			System.out.println("<-------------Machine II------------------->");
+			washingMachine2.wash(washPowder2, water2, electricity2, clothes2);
+		} catch (LowWaterLevelException e) {
+			e.printStackTrace();
+		} catch (PowerFailureException e) {
+			e.printStackTrace();
+		} catch (WrongPowderException e) {
+			e.printStackTrace();
+		} catch (MotorFailureException e) {
+			e.printStackTrace();
 		}
-        
-		if (laundryResult1 !=null||laundryResult2 != null || laundryResult3 !=null)
-		{
-		System.out.println("<-------------------------Washing Started in machine 1---------------------------------------->\n\n");
-        System.out.println("Laundry Details:");
-        //System.out.println("Washing Machine Number is: "+laundryResult.count);
-        System.out.println("Number of clothes: " + laundryResult1.getNumberOfCloths());
-        System.out.println("Time required: " + laundryResult1.getTimeRequired() + " hours");
-        System.out.println("Total cost: $" + laundryResult1.getTotalCost());
-        System.out.println("Water used: " + laundryResult1.getWaterUsed() + " liters");
-        System.out.println("Electricity used: " + laundryResult1.getElectricityUsed() + " watts");
-        System.out.println("Cost of washing powder: $" + laundryResult1.getCostOfWashingPowder());
-        System.out.println("\n\n<---------------------Washing clothes completed in machine 1------------------------------->");
-        
-		System.out.println("<-------------------------Washing Started in machine 2---------------------------------------->\n\n");
-        System.out.println("Laundry Details:");
-        //System.out.println("Washing Machine Number is: "+laundryResult.count);
-        System.out.println("Number of clothes: " + laundryResult2.getNumberOfCloths());
-        System.out.println("Time required: " + laundryResult2.getTimeRequired() + " hours");
-        System.out.println("Total cost: $" + laundryResult2.getTotalCost());
-        System.out.println("Water used: " + laundryResult2.getWaterUsed() + " liters");
-        System.out.println("Electricity used: " + laundryResult2.getElectricityUsed() + " watts");
-        System.out.println("Cost of washing powder: $" + laundryResult2.getCostOfWashingPowder());
-        System.out.println("\n\n<---------------------Washing clothes completed in machine 2------------------------------->");
-        
-        
-		System.out.println("<-------------------------Washing Started in machine 3---------------------------------------->\n\n");
-        System.out.println("Laundry Details:");
-        //System.out.println("Washing Machine Number is: "+laundryResult.count);
-        System.out.println("Number of clothes: " + laundryResult3.getNumberOfCloths());
-        System.out.println("Time required: " + laundryResult3.getTimeRequired() + " hours");
-        System.out.println("Total cost: $" + laundryResult3.getTotalCost());
-        System.out.println("Water used: " + laundryResult3.getWaterUsed() + " liters");
-        System.out.println("Electricity used: " + laundryResult3.getElectricityUsed() + " watts");
-        System.out.println("Cost of washing powder: $" + laundryResult3.getCostOfWashingPowder());
-        System.out.println("\n\n<---------------------Washing clothes completed in machine 3------------------------------->");
+		try {			
+			System.out.println("<-------------Machine III------------------->");
+			washingMachine3.wash(washPowder3, water3, electricity3, clothes3);
+		} catch (LowWaterLevelException e) {
+			e.printStackTrace();
+		} catch (PowerFailureException e) {
+			e.printStackTrace();
+		} catch (WrongPowderException e) {
+			e.printStackTrace();
+		} catch (MotorFailureException e) {
+			e.printStackTrace();
 		}
-		
 	}
 }
 
@@ -124,16 +105,14 @@ class WashingMachine extends Thread {
 	
 	
 	WashingTub washTub = new WashingTub(100,"steel"); 
-		//int count=1;
-	
-		Laundry wash(WashingPowder washPowder, Water water, Electricity elect, Cloth cloth[]) throws LowWaterLevelException,PowerFailureException,WrongPowderException,MotorFailureException 
+	Laundry wash(WashingPowder washPowder, Water water, Electricity elect, Cloth cloth[]) throws LowWaterLevelException,PowerFailureException,WrongPowderException,MotorFailureException 
 		{			
 			//count++;
 			boolean waterLevel = false;
 			boolean powerLevel = false;
 			boolean motorHealth = false;
 			boolean powderType = false;
-		
+			boolean noMaxClothes=false;
 				double value = Math.random()%10;
 				
 				if(value>=0)
@@ -169,21 +148,12 @@ class WashingMachine extends Thread {
 					throw new WrongPowderException("WrongPowder used stop immediately");
 				}
 			
-			int numberOfCloths = cloth.length;
-	        float waterUsed = water.getQuantity(); 
-	        float electricityUsed = elect.getUnitUsed() * elect.getVoltage(); 
+				for(int i=0;i<=100;i++)
+				{
+					System.out.println("Washing: "+Arrays.asList(cloth[0].getType(),cloth[1].getType(),cloth[2].getType(),cloth[3].getType(),cloth[4].getType())+"    Progress"+i+"%"); //+Arrays.asList(cloth)
+				}
+				return null;
 
-	        
-	        float costOfWashingPowder = washPowder.getPrice() * washPowder.getQuantity();
-
-	        
-	        float totalCost = numberOfCloths * cloth[0].getCost(); 
-
-	       
-	        float timeRequired = 1.5f; 
-
-	        Laundry laundryResult = new Laundry(numberOfCloths, timeRequired, totalCost, waterUsed, electricityUsed, costOfWashingPowder);
-	        return laundryResult;
 		}
 		
 }
@@ -215,6 +185,14 @@ class MotorFailureException extends Exception
 class WrongPowderException extends Exception
 {
 	WrongPowderException(String msg) 
+	{
+		super(msg);
+	}
+}
+
+class MaxAmountOfClothesException extends Exception
+{
+	MaxAmountOfClothesException(String msg) 
 	{
 		super(msg);
 	}
