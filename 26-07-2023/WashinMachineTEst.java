@@ -4,39 +4,39 @@ public class WashingMachineTEst {
 		
 		
 		//////////////////////////////
-		WashingPowder washPowder = new WashingPowder(100, "Nirma", "Front Load", true, 10.0f);
-        Water water = new Water("Tap", 20, "Cold");
+		WashingPowder washPowder = new WashingPowder(45, "Nirma", "Front Load", true, 110.0f);
+        Water water = new Water("Tap", 200, "Cold");
         Electricity electricity = new Electricity("AC", 220.0f, 8, 2, "PowerCo");
 
         
         Cloth[] clothes = new Cloth[5];
-        clothes[0] = new Cloth("Cotton", "Purple", 5.0f, "Shirt", true);
+        clothes[0] = new Cloth("Cotton", "Purple", 896.3133f, "Shirt", true);
         clothes[1] = new Cloth("Denim", "Blue", 8.0f, "Denim Jacket", true);
         clothes[2] = new Cloth("Polyester", "Red", 6.0f, "T-Shirt", true);
         clothes[3] = new Cloth("Silk", "Black", 12.0f, "Dress", true);
         clothes[4] = new Cloth("Wool", "Grey", 10.0f, "Sweater", true);
         //////////////////////////////////
         
-		WashingPowder washPowder2 = new WashingPowder(100, "Surf Excel", "Top Load", true, 10.0f);
-        Water water2 = new Water("Tap", 20, "Cold");
+		WashingPowder washPowder2 = new WashingPowder(17, "Surf Excel", "Top Load", true, 510.980f);
+        Water water2 = new Water("Tap", 120, "Cold");
         Electricity electricity2 = new Electricity("DC", 120.0f, 2, 4, "Reliance");
 
         
         Cloth[] clothes2 = new Cloth[5];
-        clothes2[0] = new Cloth("Cotton", "White", 5.0f, "Shirt", true);
+        clothes2[0] = new Cloth("Cotton", "White", 555.657f, "Shirt", true);
         clothes2[1] = new Cloth("Denim", "Blue", 8.0f, "Jeans", true);
         clothes2[2] = new Cloth("Polyester", "Red", 6.0f, "T-Shirt", true);
         clothes2[3] = new Cloth("Silk", "Black", 12.0f, "Dress", true);
         clothes2[4] = new Cloth("Wool", "Grey", 10.0f, "Sweater", true);
         
         ////////////////////////////////////////
-		WashingPowder washPowder3 = new WashingPowder(100, "Tide", "Front Load", true, 10.0f);
-        Water water3 = new Water("Tap", 20, "Cold");
+		WashingPowder washPowder3 = new WashingPowder(87, "Tide", "Front Load", true, 167.880f);
+        Water water3 = new Water("Tap", 320, "Cold");
         Electricity electricity3 = new Electricity("AC", 100.0f, 88, 20, "TATA Power");
 
         
         Cloth[] clothes3 = new Cloth[5];
-        clothes3[0] = new Cloth("Cotton", "White", 5.0f, "Turtle neck T-Shirt", true);
+        clothes3[0] = new Cloth("Cotton", "White", 908.450f, "Turtle neck T-Shirt", true);
         clothes3[1] = new Cloth("Denim", "Blue", 8.0f, "Jeans Pant", true);
         clothes3[2] = new Cloth("Polyester", "Red", 6.0f, "T-Shirt", true);
         clothes3[3] = new Cloth("Silk", "Black", 12.0f, "Dress", true);
@@ -53,11 +53,15 @@ public class WashingMachineTEst {
         washingMachine3.start();
         
 
-        Laundry laundryResult = null;
+        Laundry laundryResult1 = null;
+        Laundry laundryResult2 = null;
+        Laundry laundryResult3 = null;
 
 		try 
 		{
-			laundryResult = washingMachine1.wash(washPowder, water, electricity, clothes);
+			laundryResult1 = washingMachine1.wash(washPowder, water, electricity, clothes);
+			laundryResult2 = washingMachine2.wash(washPowder2, water2, electricity2, clothes2);
+			laundryResult3= washingMachine3.wash(washPowder3, water3, electricity3, clothes3);
 		} catch (LowWaterLevelException e) 
 		{
 			e.printStackTrace();
@@ -72,18 +76,41 @@ public class WashingMachineTEst {
 			e.printStackTrace();
 		}
         
-		if (laundryResult != null)
+		if (laundryResult1 !=null||laundryResult2 != null || laundryResult3 !=null)
 		{
-		//System.out.println("<-------------------------Washing Started---------------------------------------->\n\n");
+		System.out.println("<-------------------------Washing Started in machine 1---------------------------------------->\n\n");
         System.out.println("Laundry Details:");
         //System.out.println("Washing Machine Number is: "+laundryResult.count);
-        System.out.println("Number of clothes: " + laundryResult.getNumberOfCloths());
-        System.out.println("Time required: " + laundryResult.getTimeRequired() + " hours");
-        System.out.println("Total cost: $" + laundryResult.getTotalCost());
-        System.out.println("Water used: " + laundryResult.getWaterUsed() + " liters");
-        System.out.println("Electricity used: " + laundryResult.getElectricityUsed() + " watts");
-        System.out.println("Cost of washing powder: $" + laundryResult.getCostOfWashingPowder());
-        //System.out.println("\n\n<---------------------Washing clothes completed------------------------------->");
+        System.out.println("Number of clothes: " + laundryResult1.getNumberOfCloths());
+        System.out.println("Time required: " + laundryResult1.getTimeRequired() + " hours");
+        System.out.println("Total cost: $" + laundryResult1.getTotalCost());
+        System.out.println("Water used: " + laundryResult1.getWaterUsed() + " liters");
+        System.out.println("Electricity used: " + laundryResult1.getElectricityUsed() + " watts");
+        System.out.println("Cost of washing powder: $" + laundryResult1.getCostOfWashingPowder());
+        System.out.println("\n\n<---------------------Washing clothes completed in machine 1------------------------------->");
+        
+		System.out.println("<-------------------------Washing Started in machine 2---------------------------------------->\n\n");
+        System.out.println("Laundry Details:");
+        //System.out.println("Washing Machine Number is: "+laundryResult.count);
+        System.out.println("Number of clothes: " + laundryResult2.getNumberOfCloths());
+        System.out.println("Time required: " + laundryResult2.getTimeRequired() + " hours");
+        System.out.println("Total cost: $" + laundryResult2.getTotalCost());
+        System.out.println("Water used: " + laundryResult2.getWaterUsed() + " liters");
+        System.out.println("Electricity used: " + laundryResult2.getElectricityUsed() + " watts");
+        System.out.println("Cost of washing powder: $" + laundryResult2.getCostOfWashingPowder());
+        System.out.println("\n\n<---------------------Washing clothes completed in machine 2------------------------------->");
+        
+        
+		System.out.println("<-------------------------Washing Started in machine 3---------------------------------------->\n\n");
+        System.out.println("Laundry Details:");
+        //System.out.println("Washing Machine Number is: "+laundryResult.count);
+        System.out.println("Number of clothes: " + laundryResult3.getNumberOfCloths());
+        System.out.println("Time required: " + laundryResult3.getTimeRequired() + " hours");
+        System.out.println("Total cost: $" + laundryResult3.getTotalCost());
+        System.out.println("Water used: " + laundryResult3.getWaterUsed() + " liters");
+        System.out.println("Electricity used: " + laundryResult3.getElectricityUsed() + " watts");
+        System.out.println("Cost of washing powder: $" + laundryResult3.getCostOfWashingPowder());
+        System.out.println("\n\n<---------------------Washing clothes completed in machine 3------------------------------->");
 		}
 		
 	}
@@ -109,7 +136,7 @@ class WashingMachine extends Thread {
 		
 				double value = Math.random()%10;
 				
-				if(value>=0.1)
+				if(value>=0)
 				{
 					waterLevel=true;
 				}
@@ -117,7 +144,7 @@ class WashingMachine extends Thread {
 				{
 					throw new LowWaterLevelException("Please fill water again");
 				}
-				if(value>0.15 && value<0.66)
+				if(value>0)  //value>0.15 && value<0.66
 				{
 					powerLevel=true;
 				}
@@ -125,7 +152,7 @@ class WashingMachine extends Thread {
 				{
 					throw new PowerFailureException("No power to run machine");
 				}
-				if(value>=0.20 && value<=0.9)
+				if(value>0) //value>=0.20 && value<=0.9
 				{
 					motorHealth=true;
 				}
@@ -133,7 +160,7 @@ class WashingMachine extends Thread {
 				{
 					throw new MotorFailureException("Motor Failure please contact service");
 				}
-				if(value>=0.25 && value<=0.88)
+				if(value>0) //value>=0.25 && value<=0.88
 				{
 					powderType=true;
 				}
