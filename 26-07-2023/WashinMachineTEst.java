@@ -144,7 +144,7 @@ class WashingMachine extends Thread {
 				{
 					throw new LowWaterLevelException("Please fill water again");
 				}
-				if(value>0)  //value>0.15 && value<0.66
+				if(value>0.15 && value<0.66)  //value>0.15 && value<0.66
 				{
 					powerLevel=true;
 				}
@@ -152,7 +152,7 @@ class WashingMachine extends Thread {
 				{
 					throw new PowerFailureException("No power to run machine");
 				}
-				if(value>0) //value>=0.20 && value<=0.9
+				if(value>=0.20 && value<=0.9) //value>=0.20 && value<=0.9
 				{
 					motorHealth=true;
 				}
@@ -160,7 +160,7 @@ class WashingMachine extends Thread {
 				{
 					throw new MotorFailureException("Motor Failure please contact service");
 				}
-				if(value>0) //value>=0.25 && value<=0.88
+				if(value>=0.25 && value<=0.88) //value>=0.25 && value<=0.88
 				{
 					powderType=true;
 				}
