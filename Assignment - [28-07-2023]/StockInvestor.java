@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 
@@ -41,53 +44,6 @@ class Stock
 	{
 		System.out.println("\n The stock "+name+" was bought at the price of "+currentPrice);
 	}
-}
-
-
-
-
-//Tracking the quantity of stock user want to buy and sell
-//Portfolio value before and after selling of stock
-class Transaction 
-{
-    private Stock stock;
-    private int quantity;
-    private double price;
-   
-	public Transaction(Stock stock, int quantity, double price) 
-	{
-		super();
-		this.stock = stock;
-		this.quantity = quantity;
-		this.price = price;
-	}
-	public Stock getStock() 
-	{
-		return stock;
-	}
-	public void setStock(Stock stock) 
-	{
-		this.stock = stock;
-	}
-	public int getQuantity() 
-	{
-		return quantity;
-	}
-	public void setQuantity(int quantity) 
-	{
-		this.quantity = quantity;
-	}
-	public double getPrice() 
-	{
-		return price;
-	}
-	public void setPrice(double price) 
-	{
-		this.price = price;
-	}
-	
-	
-	
 }
 
 //Buy or sell stocks simulation
@@ -131,7 +87,7 @@ class Portfolio {
             holdings.remove(stock); // Remove the stock if the quantity becomes zero
         } else {
             holdings.put(stock, newQuantity);
-            System.out.println("\n"+"Current No of " +stock.getName()+" held: "+newQuantity);
+            System.out.println("\n"+"Current No of " +stock.getName()+" held: "+quantity);
         }
     }
 
@@ -156,7 +112,7 @@ class Portfolio {
     		int quantity = holdings.get(stock);
     		double randomStockValue = calculator.stockPriceSimulator("Your purchased")*quantity;
     		totalValue +=randomStockValue;
-    		System.out.println("\n Quantity of stocks held: "+quantity+", value of each stock at the time of selling: "+(randomStockValue/quantity)+"\n The value of your profile is: "+totalValue+"\n");
+    		System.out.println("\n Quantity of stocks sold: "+quantity+", value of each stock at the time of selling: "+(randomStockValue/quantity)+"\n The value of your profile is: "+totalValue+"\n");
     	}
     	System.out.println("\n The value of your profile is: "+totalValue);
     	return totalValue;
@@ -267,15 +223,8 @@ class BuyStockThread extends Thread {
 
 //Main method to view and maintain your Portfolio
 public class StockInvestor {
-    public static void writeToTextFile(String content) 
-    {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("portfolio_updates.txt", true))) {
-            writer.write(content);
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	
+
     public static void main(String[] args) {
         // Initialize the market
         StockMap market = new StockMap();
@@ -283,23 +232,23 @@ public class StockInvestor {
         market.stockMarketView();
         market.display();
 
-        // Create multiple stock instances for buying
+        // Creating multiple stock instances for buying
         Stock stock1 = new Stock("GOOGL", 280.0);
         Stock stock2 = new Stock("ORCL", 75.0);
         Stock stock3 = new Stock("VZ", 55.0);
 
-        // Create threads for buying stocks
+
         Thread buyStock1Thread = new BuyStockThread(portfolio, stock1, 50);
         Thread buyStock2Thread = new BuyStockThread(portfolio, stock2, 20);
         Thread buyStock3Thread = new BuyStockThread(portfolio, stock3, 15);
 
-        // Start the buying threads
+
         buyStock1Thread.start();
         buyStock2Thread.start();
         buyStock3Thread.start();
 
         try {
-            // Waiting for all buying threads to finish
+            
             buyStock1Thread.join();
             buyStock2Thread.join();
             buyStock3Thread.join();
@@ -327,10 +276,45 @@ public class StockInvestor {
             } else {
                 System.out.println("Net Loss made : " + netTradeOff+"$");
             }
+            System.out.println("----------------------------------------------------------------------------------------");
+			System.out.println("Report is being generated ....");
+            FileOutputStream fileOutputStream = new FileOutputStream("PortfolioReport.txt");
+            String reportData = "Stocks purchased\n"
+                    + stock1.getName() 
+                    + ", Price: $" + stock1.getCurrentPrice()+ "\n"
 
-        } catch (InterruptedException e) {
+                    + stock2.getName()
+                    + ", Price: $" + stock2.getCurrentPrice()+ "\n"
+
+
+                    + stock3.getName() 
+                    + ", Price: $" + stock3.getCurrentPrice()+ "\n"
+
+
+                    + "Initial Portfolio Value: $" + initialValue + "\n"
+                    + "Final Portfolio Value: $" + finalValue + "\n"
+                    +"Trade Outcome: "+netTradeOff+"$";
+			
+            byte array[]=reportData.getBytes();
+			fileOutputStream.write(array);
+			
+			System.out.println("Report generated   ...");
+			fileOutputStream.close();
+        } 
+        catch (InterruptedException e)
+        {
             e.printStackTrace();
         }
-    }
+		catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+        }
 }
+
+
 
