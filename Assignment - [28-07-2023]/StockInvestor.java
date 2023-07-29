@@ -161,28 +161,28 @@ class StockMap {
     public  void stockMarketView()
     {
     	// Adding stock names and initial prices to the map to simulate trading 
-        stockPrices.put("AAPL", 150.0);
-        stockPrices.put("GOOGL", 280.0);
-        stockPrices.put("MSFT", 300.0);
+        stockPrices.put("APPLE", 150.0);
+        stockPrices.put("GOOGLE", 280.0);
+        stockPrices.put("MICROSOFT", 300.0);
         stockPrices.put("NOKIA",436.12);
-        stockPrices.put("AMZN", 300.0);
-        stockPrices.put("TSLA", 750.0);
-        stockPrices.put("FB", 330.0);
-        stockPrices.put("NFLX", 540.0);
-        stockPrices.put("BABA", 220.0);
-        stockPrices.put("NVDA", 230.0);
-        stockPrices.put("PYPL", 250.0);
-        stockPrices.put("MRNA", 420.0);
-        stockPrices.put("SQ", 220.0);
-        stockPrices.put("PFE", 45.0);
-        stockPrices.put("ORCL", 75.0);
-        stockPrices.put("KO", 54.0);
-        stockPrices.put("DIS", 180.0);
-        stockPrices.put("V", 220.0);
-        stockPrices.put("JNJ", 165.0);
-        stockPrices.put("WMT", 140.0);
-        stockPrices.put("VZ", 55.0);
-        stockPrices.put("PG", 140.0);
+        stockPrices.put("AMAZ0N", 300.0);
+        stockPrices.put("TESLA", 750.0);
+        stockPrices.put("FACEBOOK", 330.0);
+        stockPrices.put("NETFLIX", 540.0);
+        stockPrices.put("BLACKBERRY", 220.0);
+        stockPrices.put("NVDIA", 230.0);
+        stockPrices.put("PIZZAHUT", 250.0);
+        stockPrices.put("MCDONALDS", 420.0);
+        stockPrices.put("SQL", 220.0);
+        stockPrices.put("TATAPOWER", 45.0);
+        stockPrices.put("ORACLE", 75.0);
+        stockPrices.put("KIRLOSKAR", 54.0);
+        stockPrices.put("RELIANCE", 180.0);
+        stockPrices.put("AIRTEL", 220.0);
+        stockPrices.put("BLACKBOX", 165.0);
+        stockPrices.put("WALMART", 140.0);
+        stockPrices.put("META", 55.0);
+        stockPrices.put("OPENAI", 140.0);
     }
     
     public void display()
@@ -233,9 +233,9 @@ public class StockInvestor {
         market.display();
 
         // Creating multiple stock instances for buying
-        Stock stock1 = new Stock("GOOGL", 280.0);
-        Stock stock2 = new Stock("ORCL", 75.0);
-        Stock stock3 = new Stock("VZ", 55.0);
+        Stock stock1 = new Stock("GOOGLE", 280.0);
+        Stock stock2 = new Stock("ORACLE", 75.0);
+        Stock stock3 = new Stock("META", 55.0);
 
 
         Thread buyStock1Thread = new BuyStockThread(portfolio, stock1, 50);
@@ -255,9 +255,9 @@ public class StockInvestor {
 
             // Calculate and print the portfolio's value after buying
             double initialValue = portfolio.calculatePortfolioValue();
+            System.out.println("-------------------------------------------------------------------------------------");
             System.out.println("Initial Portfolio Value: $" + initialValue);
-
-            System.out.println("\n-------------------------------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------------------------------------");
 
             // Selling of stocks
             portfolio.sellStock(stock1, 25);
