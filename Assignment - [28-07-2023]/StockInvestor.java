@@ -1,0 +1,336 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+
+
+
+
+
+//Details of stock --> [stock name, and listed stock price]
+class Stock 
+{
+    private String name;
+    private double currentPrice;
+	public Stock(String name, double currentPrice) 
+	{
+		super();
+		this.name = name;
+		this.currentPrice = currentPrice;
+	}
+	public String getName() 
+	{
+		return name;
+	}
+	public void setName(String name) 
+	{
+		this.name = name;
+	}
+	public double getCurrentPrice() 
+	{
+		return currentPrice;
+	}
+	public void setCurrentPrice(double currentPrice) 
+	{
+		this.currentPrice = currentPrice;
+	}
+	void display()
+	{
+		System.out.println("\n The stock "+name+" was bought at the price of "+currentPrice);
+	}
+}
+
+
+
+
+//Tracking the quantity of stock user want to buy and sell
+//Portfolio value before and after selling of stock
+class Transaction 
+{
+    private Stock stock;
+    private int quantity;
+    private double price;
+   
+	public Transaction(Stock stock, int quantity, double price) 
+	{
+		super();
+		this.stock = stock;
+		this.quantity = quantity;
+		this.price = price;
+	}
+	public Stock getStock() 
+	{
+		return stock;
+	}
+	public void setStock(Stock stock) 
+	{
+		this.stock = stock;
+	}
+	public int getQuantity() 
+	{
+		return quantity;
+	}
+	public void setQuantity(int quantity) 
+	{
+		this.quantity = quantity;
+	}
+	public double getPrice() 
+	{
+		return price;
+	}
+	public void setPrice(double price) 
+	{
+		this.price = price;
+	}
+	
+	
+	
+}
+
+//Buy or sell stocks simulation
+
+class Portfolio {
+    private HashMap<Stock, Integer> holdings;
+
+    public Portfolio() 
+    {
+        holdings = new HashMap<>();
+    }
+
+    // Method to buy stocks and add them to the portfolio
+    public void buyStock(Stock stock, int quantity) 
+    {
+        if (quantity <= 0) 
+        {
+            throw new IllegalArgumentException("Quantity must be a positive integer.");
+        }
+
+        int currentQuantity = holdings.getOrDefault(stock, 0);
+        holdings.put(stock, currentQuantity + quantity);
+        int netQuantity=currentQuantity + quantity;
+        System.out.println("\n"+"Current No of " +stock.getName()+" held: "+netQuantity);
+    }
+
+    // Method to sell stocks from the portfolio
+    public void sellStock(Stock stock, int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Quantity must be a positive integer.");
+        }
+
+        int currentQuantity = holdings.getOrDefault(stock, 0);
+        int newQuantity = currentQuantity - quantity;
+
+        if (newQuantity < 0) {
+            throw new IllegalArgumentException("Cannot sell more stocks than available in the portfolio.");
+        }
+
+        if (newQuantity == 0) {
+            holdings.remove(stock); // Remove the stock if the quantity becomes zero
+        } else {
+            holdings.put(stock, newQuantity);
+            System.out.println("\n"+"Current No of " +stock.getName()+" held: "+newQuantity);
+        }
+    }
+
+    // Method to calculate the total value of the portfolio
+    public double calculatePortfolioValue() {
+        double totalValue = 0.0;
+        
+        for (Stock stock : holdings.keySet()) 
+        {
+            int quantity = holdings.get(stock);
+            double stockValue = stock.getCurrentPrice() * quantity;
+            totalValue += stockValue;
+            System.out.println("\n Quantity of stocks held: "+quantity+", value of each stock at which it was bought: "+stock.getCurrentPrice()+"\n The value of your profile is: "+totalValue+"\n");
+        }
+        return totalValue;
+    }
+    StockSimulator calculator = new StockSimulator();
+    public double newPortfolioValue() {
+    	double totalValue=0;
+    	for(Stock stock:holdings.keySet())
+    	{
+    		int quantity = holdings.get(stock);
+    		double randomStockValue = calculator.stockPriceSimulator("Your purchased")*quantity;
+    		totalValue +=randomStockValue;
+    		System.out.println("\n Quantity of stocks held: "+quantity+", value of each stock at the time of selling: "+(randomStockValue/quantity)+"\n The value of your profile is: "+totalValue+"\n");
+    	}
+    	System.out.println("\n The value of your profile is: "+totalValue);
+    	return totalValue;
+    }
+    
+    
+    // Method to get the quantity of a specific stock in the portfolio
+    public int getStockQuantity(Stock stock) {
+        return holdings.getOrDefault(stock, 0);
+    }
+}
+
+//Class for simulating a stock market
+//Returns a random value for a given stock between 0 to 5000
+//To simulate a stock market to get new prices of stocks for profits or loss
+
+class StockSimulator 
+{
+	public LocalDateTime timeStamp;
+
+	public StockSimulator()
+	{
+
+	}
+	public double stockPriceSimulator(String name)
+	{
+		timeStamp = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm:ss");
+		String formattedTime=timeStamp.format(formatter);
+		String stockBoughtName=name;
+		int max = 1000;
+		int min = 0;
+		double currentStockprice = Math.floor(Math.random() *(max - min + 1) + min);
+		//System.out.println(stockBoughtName+" stock is at the price of:  "+currentStockprice+" time at which the stock price is viewed at "+formattedTime);
+		return currentStockprice;
+	}
+}
+
+//Predefines set of stocks u can buy
+// Creating a map --> Map<String, Double> stockPrices = new HashMap<>();
+class StockMap {
+	
+    // Creating a map to store stock names and their initial prices
+    public static Map<String, Double> stockPrices = new HashMap<>();
+   
+    public  void stockMarketView()
+    {
+    	// Adding stock names and initial prices to the map to simulate trading 
+        stockPrices.put("AAPL", 150.0);
+        stockPrices.put("GOOGL", 280.0);
+        stockPrices.put("MSFT", 300.0);
+        stockPrices.put("NOKIA",436.12);
+        stockPrices.put("AMZN", 300.0);
+        stockPrices.put("TSLA", 750.0);
+        stockPrices.put("FB", 330.0);
+        stockPrices.put("NFLX", 540.0);
+        stockPrices.put("BABA", 220.0);
+        stockPrices.put("NVDA", 230.0);
+        stockPrices.put("PYPL", 250.0);
+        stockPrices.put("MRNA", 420.0);
+        stockPrices.put("SQ", 220.0);
+        stockPrices.put("PFE", 45.0);
+        stockPrices.put("ORCL", 75.0);
+        stockPrices.put("KO", 54.0);
+        stockPrices.put("DIS", 180.0);
+        stockPrices.put("V", 220.0);
+        stockPrices.put("JNJ", 165.0);
+        stockPrices.put("WMT", 140.0);
+        stockPrices.put("VZ", 55.0);
+        stockPrices.put("PG", 140.0);
+    }
+    
+    public void display()
+    {
+    	System.out.println("<------------------------Current Market------------------------------>\n");
+        for (Map.Entry<String, Double> entry : stockPrices.entrySet()) {
+            String stockName = entry.getKey();
+            double stockPrice = entry.getValue();
+            System.out.println(stockName + ": $" + stockPrice);
+        }
+        System.out.println("\n<--------------------------------------------------------------------->");
+    }
+
+       
+} 
+
+
+//Thread class for buying stocks
+class BuyStockThread extends Thread {
+ private Portfolio portfolio;
+ private Stock stock;
+ private int quantity;
+ private StringBuilder updates;
+ 
+ public BuyStockThread(Portfolio portfolio, Stock stock, int quantity) {
+     this.portfolio = portfolio;
+     this.stock = stock;
+     this.quantity = quantity;
+ }
+
+ @Override
+ public void run() {
+     portfolio.buyStock(stock, quantity);
+ }
+}
+
+
+
+//Main method to view and maintain your Portfolio
+public class StockInvestor {
+    public static void writeToTextFile(String content) 
+    {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("portfolio_updates.txt", true))) {
+            writer.write(content);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void main(String[] args) {
+        // Initialize the market
+        StockMap market = new StockMap();
+        Portfolio portfolio = new Portfolio();
+        market.stockMarketView();
+        market.display();
+
+        // Create multiple stock instances for buying
+        Stock stock1 = new Stock("GOOGL", 280.0);
+        Stock stock2 = new Stock("ORCL", 75.0);
+        Stock stock3 = new Stock("VZ", 55.0);
+
+        // Create threads for buying stocks
+        Thread buyStock1Thread = new BuyStockThread(portfolio, stock1, 50);
+        Thread buyStock2Thread = new BuyStockThread(portfolio, stock2, 20);
+        Thread buyStock3Thread = new BuyStockThread(portfolio, stock3, 15);
+
+        // Start the buying threads
+        buyStock1Thread.start();
+        buyStock2Thread.start();
+        buyStock3Thread.start();
+
+        try {
+            // Waiting for all buying threads to finish
+            buyStock1Thread.join();
+            buyStock2Thread.join();
+            buyStock3Thread.join();
+
+            // Calculate and print the portfolio's value after buying
+            double initialValue = portfolio.calculatePortfolioValue();
+            System.out.println("Initial Portfolio Value: $" + initialValue);
+
+            System.out.println("\n-------------------------------------------------------------------------------------");
+
+            // Selling of stocks
+            portfolio.sellStock(stock1, 25);
+            portfolio.sellStock(stock2, 10);
+            portfolio.sellStock(stock3, 7);
+
+            // Calculate and print the portfolio's value after selling
+            double finalValue = portfolio.newPortfolioValue();
+            System.out.println("\n-------------------------------------------------------------------------------------");
+            System.out.println("Final Portfolio Value: $" + finalValue);
+
+            // Calculate and print the net trade-off (profit or loss)
+            double netTradeOff = finalValue - initialValue;
+            if (finalValue > initialValue) {
+                System.out.println("Net Profit made : " + netTradeOff+"$");
+            } else {
+                System.out.println("Net Loss made : " + netTradeOff+"$");
+            }
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
