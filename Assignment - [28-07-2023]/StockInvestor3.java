@@ -137,11 +137,24 @@ class Portfolio {
      return totalValue;
  }
 
+ public void displayPortfolioDiversification() {
+     double totalValue = calculatePortfolioValue();
+
+     System.out.println("\n--------------- Portfolio Diversification ---------------");
+     for (Stock stock : holdings.keySet()) {
+         int quantity = heldQuantity.getOrDefault(stock, 0);
+         double stockValue = stock.getCurrentPrice() * quantity;
+         double stockPercentage = (stockValue / totalValue) * 100.0;
+         System.out.println(stock.getName() + ": " + String.format("%.2f", stockPercentage) + "%");
+     }
+     System.out.println("--------------------------------------------------------");
+ }
+ 
  // Method to get the quantity of a specific stock in the portfolio
  public int getStockQuantity(Stock stock) {
      return holdings.getOrDefault(stock, 0);
  }
- // Method to calculate the net value of the portfolio based on both bought and sold stocks
+
 
 
 }
@@ -238,6 +251,9 @@ public class StockInvestor {
             buyStock1Thread.join();
             buyStock2Thread.join();
             buyStock3Thread.join();
+            
+            //view which of the shares bought has the highest value
+            portfolio.displayPortfolioDiversification();
 
             // Calculate and print the portfolio's value after buying
             double initialValue = portfolio.calculatePortfolioValue();
@@ -251,6 +267,8 @@ public class StockInvestor {
             portfolio.sellStock(stock2, 10);
             portfolio.sellStock(stock3, 7);
 
+            //view which of the shares bought has the highest value
+            portfolio.displayPortfolioDiversification();
             // Calculate and print the portfolio's value after selling
             double trade1 = portfolio.newPortfolioValue();
             trades.add(trade1);
@@ -263,6 +281,7 @@ public class StockInvestor {
             portfolio.sellStock(stock2, 10);
             portfolio.sellStock(stock3, 8);
             
+
             double trade2 = portfolio.newPortfolioValue();
             trades.add(trade2);
             System.out.println("\n-------------------------------------------------------------------------------------");
@@ -287,6 +306,7 @@ public class StockInvestor {
 	   	    	 sum+=trade;
 	   	     }
 	   	    netValue=sum-trade0;
+
 	   	    portfolio.viewTransactionHistory();
             System.out.println("Net value:"+netValue);
             System.out.println("----------------------------------------------------------------------------------------");
