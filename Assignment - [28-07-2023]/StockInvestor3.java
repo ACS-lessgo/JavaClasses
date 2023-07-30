@@ -108,7 +108,7 @@ class Portfolio {
          int quantity = heldQuantity.getOrDefault(stock, 0);
          double stockValue = stock.getCurrentPrice() * quantity;
          totalValue += stockValue;
-         System.out.println("\n Quantity of stocks held: " + quantity + ", value of each stock at which it was bought: "
+         System.out.println(stock.getName()+"\n Quantity of stocks held: " + quantity + ", value of each stock at which it was bought: "
                  + stock.getCurrentPrice() + "\n The value of your profile is: " + totalValue + "\n");
      }
      return totalValue;
@@ -127,7 +127,7 @@ class Portfolio {
          double newPrice = Math.floor(Math.random()*(max-min+1)+min);
          double stockValue = newPrice * quantity;
          totalValue += stockValue;
-         System.out.println("\n Quantity of stocks sold: " + quantity + ", value of each stock at the time of selling: "
+         System.out.println(stock.getName()+"\n Quantity of stocks sold: " + quantity + ", value of each stock at the time of selling: "
                  + newPrice + "\n The value of your profile is: " + totalValue + "\n");
          // Add transaction details to history
          String transactionDetails = "Sold " + quantity + " shares of " + stock.getName() + " at $" + newPrice+ " each.";
@@ -247,9 +247,9 @@ public class StockInvestor {
             System.out.println("-------------------------------------------------------------------------------------");
 
             // Selling of stocks
-            portfolio.sellStock(stock1, 50);
-            portfolio.sellStock(stock2, 20);
-            portfolio.sellStock(stock3, 15);
+            portfolio.sellStock(stock1, 25);
+            portfolio.sellStock(stock2, 10);
+            portfolio.sellStock(stock3, 7);
 
             // Calculate and print the portfolio's value after selling
             double trade1 = portfolio.newPortfolioValue();
@@ -257,6 +257,18 @@ public class StockInvestor {
             System.out.println("\n-------------------------------------------------------------------------------------");
             System.out.println(" Current Value after selling the stocks: $" + trade1);
             System.out.println("\n-------------------------------------------------------------------------------------");
+            
+            
+            portfolio.sellStock(stock1, 25);
+            portfolio.sellStock(stock2, 10);
+            portfolio.sellStock(stock3, 8);
+            
+            double trade2 = portfolio.newPortfolioValue();
+            trades.add(trade2);
+            System.out.println("\n-------------------------------------------------------------------------------------");
+            System.out.println(" Current Value after selling the stocks: $" + trade2);
+            System.out.println("\n-------------------------------------------------------------------------------------");
+            
             
             //Display all trades outcomes
             for(int i=0;i<trades.size();i++)
@@ -282,10 +294,10 @@ public class StockInvestor {
             System.out.println("Report is being generated ....");
             FileOutputStream fileOutputStream = new FileOutputStream("PortfolioReport.txt");
             String reportData = "Stocks purchased\n"
-                    + stock1.getName() + ", Price: $" + stock1.getCurrentPrice()
-                    + stock2.getName() + ", Price: $" + stock2.getCurrentPrice() 
-                    + stock3.getName() + ", Price: $" + stock3.getCurrentPrice() 
-                    + "Initial Portfolio Value: $" + initialValue + "\n" + "Final Portfolio Value: $" + trade1
+                    + stock1.getName() + ", Price: $" + stock1.getCurrentPrice()+"\n"
+                    + stock2.getName() + ", Price: $" + stock2.getCurrentPrice()+"\n"
+                    + stock3.getName() + ", Price: $" + stock3.getCurrentPrice()+"\n"
+                    + "Initial Portfolio Value: $" + initialValue
                     + "\n" + "Trade Outcome: $"+netValue ;
             byte array[] = reportData.getBytes();
             fileOutputStream.write(array);
