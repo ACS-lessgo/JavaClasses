@@ -8,3 +8,6 @@ Stress to Chill Work Training
 
 DSGS Innovia Community
 [Open this link](https://dsext001-eu1-215dsi0708-3dswym.3dexperience.3ds.com/#community:iCGx49nERi-AL1rOixmAfg/wiki:UP5T_xaITtCWZG0PkK7-bQ)
+
+Personal Site
+[Open this link](https://64c75b954de7b175f65190d6--reliable-macaron-63cd5d.netlify.app/)
